@@ -32,22 +32,22 @@ def construct_values( url:str, title: str,
     return values
 
 def extract_info(url: str) -> Dict:
-    """Takes a list of urls, create bs4 objects and returns a list of dictionary from selected tags."""
+    """Takes a url and returns a dictionary from selected tags."""
     page = fetch_url(url)
     obj = create_soup(page)
 
     print(f'Proccess URL:\n{url}')
     title = get_info(obj, tag='h1', attr={'class', 'page-title'})
     price = get_info(obj, tag='strong', attr={'class', 'dominant-price'})
-    info = construct_values(url=url, price=price, title=title)
+    data = construct_values(url=url, price=price, title=title)
     print("\nDone.\n")
-    return info
+    return data
 
 def extract_multiple_info(urls: List) -> List:
     multiple = []
     for url in urls:
-        info = extract_info(url)
-        multiple.append(info)
+        url_data = extract_info(url=url)
+        multiple.append(dict(url_data)) # create a new dictionary object
     return multiple
 
 def create_dir(store_dir: str) -> None:
