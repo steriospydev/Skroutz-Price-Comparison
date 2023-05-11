@@ -106,7 +106,7 @@ def compare_prices(jsonfile: str, dir_name: str,
 
 
 if __name__ == "__main__":
-    store_dir = 'storage/'
+    store_dir = '../storage/'
     filename = 'last_price.json'
     urls = [
    'https://www.skroutz.gr/s/34990039/Lenovo-IdeaPad-3-15ITL6-15-6-IPS-FHD-i3-1115G4-8GB-512GB-SSD-W11-Home-Arctic-Grey-US-Keyboard.html?product_id=116277144&sponsored=true'

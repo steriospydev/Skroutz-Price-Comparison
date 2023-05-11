@@ -1,4 +1,4 @@
-import utils
+from tools import utils
 from settings import STORE_DIR, LATEST_FILE, URLS
 
 data = utils.extract_multiple_info(multiple_urls=URLS)
