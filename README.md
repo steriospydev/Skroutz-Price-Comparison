@@ -37,3 +37,7 @@ If you want to modify the code, here are some guidelines:
 - The settings.py file contains the URLs to fetch data from.
 - The requirements.txt file contains the required dependencies.
 - Use virtualenv to create a virtual environment and install the dependencies.
+
+## Libraries
+- selenium
+- bs4
