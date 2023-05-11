@@ -2,12 +2,11 @@ import os
 from typing import List, Dict
 import datetime
 import json
-from selenium.webdriver.firefox.options import Options
 from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
 
-def fetch_url(url:str) -> str :
+def fetch_url(url: str) -> str:
     """Fetch html content using Selenium Firefox webdriver and return the page"""
     options = FirefoxOptions()
     options.add_argument("--headless")
@@ -20,89 +19,89 @@ def create_soup(page: str) -> BeautifulSoup:
     """Convert page to soup object"""
     return BeautifulSoup(page, 'html.parser')
 
-def get_info(object: BeautifulSoup,tag:str, attr:Dict) -> str:
-    return object.find(tag, attrs=attr).text
+def get_info(obj: BeautifulSoup, tag: str, attr: Dict) -> str:
+    return obj.find(tag, attrs=attr).text
 
-def construct_values( url:str, title: str,
-                      price:str,
-                      values: Dict = {}) -> Dict: 
+def construct_values(url: str, title: str, price: str,
+                     values: Dict = {}) -> Dict:
     values['url'] = url
     values['title'] = title
     values['price'] = price if price else 'Product temporary unavailable.'
     return values
 
+
 def extract_info(url: str) -> Dict:
-    """Takes a url and returns a dictionary from selected tags."""
+    """Takes url and returns a dictionary from selected tags."""
     page = fetch_url(url)
     obj = create_soup(page)
 
-    print(f'Proccess URL:\n{url}')
+    print(f'Process URL:\n{url}')
     title = get_info(obj, tag='h1', attr={'class', 'page-title'})
     price = get_info(obj, tag='strong', attr={'class', 'dominant-price'})
     data = construct_values(url=url, price=price, title=title)
     print("\nDone.\n")
     return data
 
-def extract_multiple_info(urls: List) -> List:
+def extract_multiple_info(multiple_urls: List) -> List:
     multiple = []
-    for url in urls:
+    for url in multiple_urls:
         url_data = extract_info(url=url)
-        multiple.append(dict(url_data)) # create a new dictionary object
+        # create a new dictionary object
+        multiple.append(dict(url_data))
     return multiple
 
-def create_dir(store_dir: str) -> None:
+# FileModel
+def create_dir(dir_name: str) -> None:
     """ Create folder to store output"""
-    if not os.path.isdir(store_dir):
-        os.mkdir(store_dir)   
-        print(f"Store dict: {store_dir} created successfully.")
+    if not os.path.isdir(dir_name):
+        os.mkdir(dir_name)
+        print(f"Store dict: {dir_name} created successfully.")
 
 def new_file() -> str:
     now = datetime.datetime.now().date()
     return f'{now}.json'
 
-def save_items(data: List,store_dir:str = '',
-                filename: str = '') -> None:
+def save_items(data: List, dir_name: str = '',
+               jsonfile: str = '') -> None:
     # Save items   
-    if store_dir != '':
-        create_dir(store_dir) 
-    if filename == '':        
-        filename = new_file()
-    file_path = store_dir + filename
-    with open(file_path, 'w') as f:
-        json.dump(data,f, ensure_ascii=False)
-        print(f'{filename} saved.')
+    if dir_name != '':
+        create_dir(dir_name)
+    if jsonfile == '':        
+        jsonfile = new_file()
+    full_path = dir_name + jsonfile
+    with open(full_path, 'w') as f:
+        json.dump(data, f, ensure_ascii=False)
+        print(f'{jsonfile} saved.')
 
 def fetch_old_values(file_archive: str) -> json:
     # Load info from basic file. Create it if it does not exist
     with open(file_archive) as f:
-        old_data = json.load(f)
-        return old_data
+        past_data = json.load(f)
+        return past_data
 
-def compare_prices(filename: str,
-                   store_dir: str,
-                    old_data:List,
-                    new_data: List):
+#
+def compare_prices(jsonfile: str, dir_name: str,
+                   past_data: List, new_data: List):
     """Compare scraped prices with the last ones."""
     for i in range(len(new_data)):
         title = new_data[i]['title']
         price_new = new_data[i]['price']
-        price_old = old_data[i]['price']
+        price_old = past_data[i]['price']
         print(f'{i}:\t{title}')
         print('-'*100)
         print(f'New price:\t{price_new}')
         print(f'Old price:\t{price_old}')
         print('\n')
-        if price_old ==  price_new:
+        if price_old == price_new:
             print('Price has not changed yet.\n')
         else:
             print('Price has changed.') 
         print('-'*100)    
-        old_data[i]['previous_price'] =  price_old
-        old_data[i]['price'] = price_new
-    
-    
-    save_items(data=new_data, store_dir=store_dir)
-    save_items(data=old_data, store_dir=store_dir, filename=filename)
+        past_data[i]['previous_price'] = price_old
+        past_data[i]['price'] = price_new
+
+    save_items(data=new_data, dir_name=dir_name)
+    save_items(data=past_data, dir_name=dir_name, jsonfile=jsonfile)
     print('latest_json updated!!')
 
 
@@ -117,11 +116,11 @@ if __name__ == "__main__":
     ]
     file_path = store_dir + filename 
 
-    info = extract_multiple_info(urls=urls)
+    info = extract_multiple_info(multiple_urls=urls)
     # save_items(store_dir=store_dir, data=info, filename=filename)
 
     old_data = fetch_old_values(file_path)
-    compare_prices(filename=filename,
-                   store_dir=store_dir,
+    compare_prices(jsonfile=filename,
+                   dir_name=store_dir,
                    new_data=info,
-                   old_data=old_data)
+                   past_data=old_data)

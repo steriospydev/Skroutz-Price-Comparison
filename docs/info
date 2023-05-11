@@ -32,3 +32,8 @@ python code:
         info[items[2].h3.text] = items[2].select('dl>dd')[0].text + ' ' + items[2].select('dl>dd')[1].text
         info[items[3].h3.text] = items[3].select('dl>dd')[1].text 
         info[items[4].h3.text] = items[4].select('dl>dd')[1].text + ' ' + items[4].select('dl>dd')[0].text
+
+
+
+
+		fetch_url
