@@ -43,7 +43,7 @@ To use this program, follow these steps:
 - Install Python 3.10 or later.
 - Clone the repository from GitHub.
 - Open the command prompt and navigate to the project directory.
-- Run install_gecko.sh to download geckodriver
+- Run tools/install_gecko.sh to download geckodriver
 - Install the required dependencies by running pip install -r requirements.txt.
 - Edit the settings.py file to include the list of URLs you want to fetch data from,
 <directory name> to store json files and <filename> that is used to save the new prices every
