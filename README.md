@@ -48,7 +48,6 @@ To use this program, follow these steps:
 - Edit the settings.py file to include the list of URLs you want to fetch data from,
 <directory name> to store json files and <filename> that is used to save the new prices every
 time a price has changed
-- Execute run_init.py to create directory and make the first fetch
 - Run the program by executing the command python main.py.
 - Wait for the program to finish running.
 - Each time the main.py is running creates a <datetime>.json with the daily prices
