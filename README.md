@@ -8,7 +8,7 @@
  This will help users keep track of changes in prices over time and make informed
  decisions about purchasing products.
 ## Features:
- - Fetch URLs from a content aggregator
+ - Retrieve info from a product's detail page given as a list of URLs 
  - Save prices in JSON format
  - Compare prices with previous data
  - Update JSON file with latest prices if the prices are different
