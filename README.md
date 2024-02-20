@@ -2,11 +2,7 @@
 
 
 ## Brief Summary
- The purpose of this project is to provide a tool that can fetch URLs from
- a content aggregator, save the prices and relative information in JSON format,
- and compare the prices fetched during the next run of the program. 
- This will help users keep track of changes in prices over time and make informed
- decisions about purchasing products.
+Track prices on an online marketplaces
 ## Features:
  - Retrieve info from a product's detail page given as a list of URLs 
  - Save prices in JSON format
