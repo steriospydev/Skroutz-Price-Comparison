@@ -2,7 +2,7 @@
 
 
 ## Brief Summary
-Track prices on an online marketplaces
+Track prices on an online marketplace
 ## Features:
  - Retrieve info from a product's detail page given as a list of URLs 
  - Save prices in JSON format
